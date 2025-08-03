@@ -1,13 +1,13 @@
-const jsonServer = require("json-server");
+const jsonServer = require('json-server');
 const server = jsonServer.create();
 const middleware = jsonServer.defaults();
-const init = require("./services");
-const walk = require("./utils/walk");
-const cors = require("./utils/cors");
+const init = require('./services');
+const walk = require('./utils/walk');
+const cors = require('./utils/cors');
 
 let ang;
 
-walk("./services", function (err, results) {
+walk('./services', function (err, results) {
   if (err) {
     console.log(err);
   } else {
@@ -23,8 +23,11 @@ walk("./services", function (err, results) {
     server.use(ang.middleware);
     server.use(ang.db);
 
-    server.listen(3004, function () {
-      console.log("JSON Server is running on 3004");
+    const PORT = process.env.PORT || 3004;
+
+    server.listen(PORT, () => {
+      console.log(`JSON Server is running on ${PORT}`);
     });
+    
   }
 });
